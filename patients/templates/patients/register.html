@@ -1,0 +1,18 @@
+{% extends "patients/base.html" %} {% block content %}
+
+<h1>Rigister page</h1>
+<div class="con">
+  {% for p in peoples %}
+
+  <div class="card">
+    <img src="{{p.image}}" alt="" srcset="" />
+    <div class="conten">
+      <p><b>{{p.name}}</b></p>
+      <p>{{p.job}}</p>
+      <p>{{p.age}}</p>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% endblock %}
