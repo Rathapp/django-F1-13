@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Patient
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -8,7 +10,9 @@ def home(request):
 
 
 def about(request):
-    return render(request,'patients/about.html')
+    patient = Patient.objects.filter(Q(dob__gt='2000-01-01') | Q(dob__lt='2003-01-01'))
+
+    return render(request,'patients/about.html',{'patient':patient})
 
 def register(request):
     people = [

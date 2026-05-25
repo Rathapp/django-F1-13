@@ -1,3 +1,32 @@
 {% extends "patients/base.html" %} {% block content %}
 <h1>about page</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Sex</th>
+      <th scope="col">DOB</th>
+      <th scope="col">POB</th>
+      <th scope="col">Adress</th>
+      <th scope="col">Profile Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in patient%}
+    <tr>
+      <th scope="row">{{p.id}}</th>
+      <td>{{p.firstName}}</td>
+      <td>{{p.lastName}}</td>
+      <td>{{p.sex}}</td>
+      <td>{{p.dob}}</td>
+      <td>{{p.pob}}</td>
+      <td>{{p.address}}</td>
+      <td><img src="{{p.profileImage.url}}" alt="" srcset="" width="50" /></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
