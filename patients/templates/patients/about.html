@@ -29,4 +29,9 @@
     {% endfor %}
   </tbody>
 </table>
+
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{form}}
+  <button type="submit" class="btn btn-primary mb-3">Save</button>
+</form>
 {% endblock %}

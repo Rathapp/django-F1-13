@@ -8,7 +8,7 @@ class Patient(models.Model):
     dob = models.DateField(null=False,blank=False)
     pob = models.CharField(max_length=200,null=True,blank=True)
     address = models.CharField(max_length=200,null=True,blank=True)
-    profileImage = models.ImageField(upload_to='profile/',default='')
+    profileImage = models.ImageField(upload_to='profile/',default='',null=True,blank=True)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

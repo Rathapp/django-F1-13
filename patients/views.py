@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Patient
 from django.db.models import Q
+from .form import patientForm
 
 # Create your views here.
 def home(request):
@@ -11,8 +12,12 @@ def home(request):
 
 def about(request):
     patient = Patient.objects.filter(Q(dob__gt='2000-01-01') | Q(dob__lt='2003-01-01'))
+    form = patientForm(request.POST)
+ 
+    if form.is_valid():
+            form.save()
 
-    return render(request,'patients/about.html',{'patient':patient})
+    return render(request,'patients/about.html',{'patient':patient,'form':form})
 
 def register(request):
     people = [
