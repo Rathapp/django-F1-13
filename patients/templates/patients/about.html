@@ -24,7 +24,9 @@
       <td>{{p.dob}}</td>
       <td>{{p.pob}}</td>
       <td>{{p.address}}</td>
+      {% if p.profileImage %}
       <td><img src="{{p.profileImage.url}}" alt="" srcset="" width="50" /></td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

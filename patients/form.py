@@ -11,5 +11,8 @@ class patientForm(forms.ModelForm):
         'lastName' : forms.TextInput( attrs={ 'class': 'form-control' }),
         'sex' : forms.Select( attrs={ 'class': 'form-control' }),
         'dob' : forms.DateInput( attrs={ 'class': 'form-control','type':'date' }),
+        'pob' : forms.TextInput(attrs={'class':'form-control'}),
+        'address' : forms.TextInput(attrs={'class':'form-control'}),
+        'profileImage': forms.FileInput(attrs={ 'class': 'form-control','type':'file' })
 
          }   

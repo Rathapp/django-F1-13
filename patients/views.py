@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from .models import Patient
 from django.db.models import Q
@@ -9,13 +9,17 @@ def home(request):
     
     return render(request,'patients/home.html')
 
-
 def about(request):
     patient = Patient.objects.filter(Q(dob__gt='2000-01-01') | Q(dob__lt='2003-01-01'))
-    form = patientForm(request.POST)
- 
-    if form.is_valid():
-            form.save()
+
+    if request.method =="POST":
+        form = patientForm(request.POST,request.FILES)
+    
+        if form.is_valid():
+                form.save()
+                form = patientForm()
+    else:
+        form = patientForm()
 
     return render(request,'patients/about.html',{'patient':patient,'form':form})
 
@@ -93,7 +97,28 @@ def register(request):
     }
 ]
 
-
-    
     return render(request,'patients/register.html',{"peoples":people})
+
+def patient(request,id=None):
+    pt = Patient.objects.all()
+    patient = None
+    if(id):
+        patient = get_object_or_404(Patient,id=id)
+         
+   
+    if request.method =="POST":
+        ptform = patientForm(request.POST,request.FILES,instance=patient)
+    
+        if ptform.is_valid():
+                ptform.save()
+                return redirect('patient')
+    else:
+        ptform = patientForm(instance=patient)
+
+    return render(request,'patients/patients.html',{'patients':pt,"form":ptform})
+
+def deletpatient(request,id):
+     pt = get_object_or_404(Patient,id=id)
+     pt.delete()
+     return redirect('patient')
 
