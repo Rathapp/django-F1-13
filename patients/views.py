@@ -1,14 +1,42 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from .models import Patient
 from django.db.models import Q
 from .form import patientForm
 
 # Create your views here.
+@login_required
 def home(request):
     
     return render(request,'patients/home.html')
 
+def userLogin(request):
+    
+     if request.user.is_authenticated:
+          return redirect("home")   
+       
+     if request.method =="POST":
+          username = request.POST.get("username")
+          password = request.POST.get("password")
+          users = authenticate(request,username=username,password=password)
+          if users is not None:
+               login(request,users)
+               messages.success(request,"Log in Sucessful")
+               return redirect("home")
+          else:
+                
+                messages.success(request,"Username and password invalide")
+                return render(request,'patients/login.html')
+
+     return render(request,'patients/login.html')
+def userLogout(request):
+     logout(request)
+     return redirect("login")
+
+@login_required
 def about(request):
     patient = Patient.objects.filter(Q(dob__gt='2000-01-01') | Q(dob__lt='2003-01-01'))
 
@@ -22,7 +50,7 @@ def about(request):
         form = patientForm()
 
     return render(request,'patients/about.html',{'patient':patient,'form':form})
-
+@login_required
 def register(request):
     people = [
     {
@@ -98,7 +126,7 @@ def register(request):
 ]
 
     return render(request,'patients/register.html',{"peoples":people})
-
+@login_required
 def patient(request,id=None):
     pt = Patient.objects.all()
     patient = None
@@ -111,14 +139,16 @@ def patient(request,id=None):
     
         if ptform.is_valid():
                 ptform.save()
+                messages.success(request,"Create Patients Sucessful")
                 return redirect('patient')
     else:
         ptform = patientForm(instance=patient)
 
     return render(request,'patients/patients.html',{'patients':pt,"form":ptform})
-
+@login_required
 def deletpatient(request,id):
      pt = get_object_or_404(Patient,id=id)
      pt.delete()
+     messages.success(request,"Delete Patients sucessful")
      return redirect('patient')
 

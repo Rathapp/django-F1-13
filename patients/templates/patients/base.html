@@ -15,18 +15,33 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="{% static 'patients/css/style.css' %}" />
     <title>Document</title>
   </head>
   <body>
     <div class="container">
-      <ul>
-        <li><a href="{% url 'home'%}">Home</a></li>
-        <li><a href="{% url 'about'%}">about</a></li>
-        <li><a href="{% url 'register'%}">Register</a></li>
-        <li><a href="{% url 'patient'%}">Patients</a></li>
-      </ul>
-      {% block content %} {% endblock %}
+      <div
+        class="w-100 d-flex justify-content-between mb-3"
+        style="height: 40px"
+      >
+        <ul>
+          <li><a href="{% url 'home'%}">Home</a></li>
+          <li><a href="{% url 'about'%}">about</a></li>
+          <li><a href="{% url 'register'%}">Register</a></li>
+          <li><a href="{% url 'patient'%}">Patients</a></li>
+        </ul>
+        <a href="{% url 'logout' %}" class="btn btn-danger"
+          ><i class="fa-solid fa-right-from-bracket"></i
+        ></a>
+      </div>
+      {% include "patients/message.html" %} {% block content %} {% endblock %}
     </div>
   </body>
 </html>
